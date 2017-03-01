@@ -53,8 +53,7 @@ The pipeline does the following:
 
 4. Create vcfs with trusted SNPs and create a vcf of all trusted SNPs with bcftools merge
 
-5. Use combined lists to genotype all isolates with raw graphs (ambiguous calls: N, gaps: -, impossible to call: ?)
-  results stored in .cov.vcf files
+5. Use combined lists to genotype all isolates with raw graphsresults stored in .cov.vcf files
   
-6. Create SNP sites multi-fasta file (stored in resultsdir/MC_consensus.fasta); this file can be used as direct input for FastTree
+6. Create SNP sites multi-fasta file (stored in resultsdir/MC_consensus.fasta; ambiguous calls: N, gaps: -, impossible to call: ?)); this file can be used as direct input for FastTree
 
