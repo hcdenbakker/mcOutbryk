@@ -7,6 +7,10 @@ requirements:
 
 bcftools
 
+vcflib
+
+bwa
+
 python3
 
 Installation:
@@ -20,8 +24,11 @@ Clone mccortex:
 git clone --recursive https://github.com/mcveanlab/mccortex.git
 
 Compile the mccortex63 binary:
+
 cd mccortex
+
 make MAXK=63 all
+
 
 Add the mccortex63 binary and the mccortex/scripts folder to your path 
 
