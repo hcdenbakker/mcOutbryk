@@ -1,8 +1,12 @@
 # mcOutbryk
 SNP calling pipeline using mccortex
 
+Inspired by/follow up of  https://github.com/iqbal-lab/outbryk.git
+
 requirements:
+
 bcftools
+
 python3
 
 Installation:
