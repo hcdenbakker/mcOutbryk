@@ -14,6 +14,7 @@ Add the mcOutbryk folder to your path
 
 Clone mccortex:
 git clone --recursive https://github.com/mcveanlab/mccortex.git
+
 Compile the mccortex63 binary:
 cd mccortex
 make MAXK=63 all
