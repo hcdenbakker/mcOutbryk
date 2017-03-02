@@ -4,6 +4,7 @@
 
 
 import os
+import re
 import subprocess
 from argparse import (ArgumentParser)
 
@@ -32,8 +33,14 @@ def perform_actions_list(sample_list, outdir):
     subprocess.call(["rm " + outdir + "/to_be_processed.txt"], stdout=subprocess.PIPE, shell=True)
     to_be_processed = open(outdir + '/to_be_processed.txt', 'w')
     for sample in sample_list:
-        if str(sample + '_R1_001.fastq.gz') in files:
-            to_be_processed.write(sample + '\t' + sample + '_R1_001.fastq.gz' + '\t' + sample + '_R2_001.fastq.gz\n')
+        regex1 = re.compile(sample + '_S._L001_R1_001.fastq.gz')
+        regex2 = re.compile(sample + '_S.._L001_R1_001.fastq.gz')
+        matches1 = [string for string in files if re.match(regex1, string)]
+        matches2 = [string for string in files if re.match(regex2, string)]
+        if len(matches1) == 1:
+            to_be_processed.write(sample + '\t' + matches1[0] + '\t' + matches1[0].rstrip('_R1_001.fastq.gz') + '001_R2_001.fastq.gz\n')
+        if len(matches2) == 1:
+            to_be_processed.write(sample + '\t' + matches2[0] + '\t' + matches2[0].rstrip('_R1_001.fastq.gz') + '001_R2_001.fastq.gz\n')
         if str(sample + '_1.fastq.gz') in files:
             to_be_processed.write(sample + '\t' + sample + '_1.fastq.gz' + '\t' + sample + '_2.fastq.gz\n')
 
