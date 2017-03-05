@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 # todo: create log
+# todo: flag, log, exclude highly divergent samples (> 10,000 SNPs)
 
 
 import os

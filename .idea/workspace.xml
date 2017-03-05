@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="e4d8ca7f-eab2-4b9a-977d-a7902b6c380e" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mc_genotype.py" afterPath="$PROJECT_DIR$/mc_genotype.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MCOutbryk.py" afterPath="$PROJECT_DIR$/MCOutbryk.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -48,19 +48,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MCOutbryk.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="MCOutbryk.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/MCOutbryk.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="192">
-              <caret line="110" column="88" lean-forward="false" selection-start-line="110" selection-start-column="88" selection-end-line="110" selection-end-column="95" />
+            <state relative-caret-position="45">
+              <caret line="3" column="18" lean-forward="false" selection-start-line="3" selection-start-column="18" selection-end-line="3" selection-end-column="18" />
               <folding>
-                <element signature="e#45#54#0" expanded="true" />
+                <element signature="e#113#122#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="mc_genotype.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="mc_genotype.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mc_genotype.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="150">
@@ -103,8 +103,8 @@
         <option value="$PROJECT_DIR$/merged_stripper.py" />
         <option value="$PROJECT_DIR$/mc_genotyper.py" />
         <option value="$PROJECT_DIR$/mcBubble.py" />
-        <option value="$PROJECT_DIR$/MCOutbryk.py" />
         <option value="$PROJECT_DIR$/mc_genotype.py" />
+        <option value="$PROJECT_DIR$/MCOutbryk.py" />
       </list>
     </option>
   </component>
@@ -316,7 +316,14 @@
       <option name="project" value="LOCAL" />
       <updated>1488725474131</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Changed back mccortex vcfcov parameters; may have to exclude samples that differ by a large number of SNPs/variants">
+      <created>1488740879286</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1488740879286</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -351,7 +358,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Changed mccortex vcfcov parameters to deal with large number (&gt; 10,000) of SNPs/variants" />
-    <option name="LAST_COMMIT_MESSAGE" value="Changed mccortex vcfcov parameters to deal with large number (&gt; 10,000) of SNPs/variants" />
+    <MESSAGE value="Changed back mccortex vcfcov parameters; may have to exclude samples that differ by a large number of SNPs/variants" />
+    <option name="LAST_COMMIT_MESSAGE" value="Changed back mccortex vcfcov parameters; may have to exclude samples that differ by a large number of SNPs/variants" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -389,7 +397,7 @@
         <state relative-caret-position="2055">
           <caret line="139" column="0" lean-forward="false" selection-start-line="139" selection-start-column="0" selection-end-line="139" selection-end-column="0" />
           <folding>
-            <element signature="e#45#54#0" expanded="true" />
+            <element signature="e#113#122#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -436,7 +444,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#45#54#0" expanded="true" />
+            <element signature="e#113#122#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -483,7 +491,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#45#54#0" expanded="true" />
+            <element signature="e#113#122#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -523,22 +531,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/MCOutbryk.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="192">
-          <caret line="110" column="88" lean-forward="false" selection-start-line="110" selection-start-column="88" selection-end-line="110" selection-end-column="95" />
-          <folding>
-            <element signature="e#45#54#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/mc_genotype.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
           <caret line="10" column="32" lean-forward="false" selection-start-line="10" selection-start-column="32" selection-end-line="10" selection-end-column="32" />
           <folding>
             <element signature="e#24#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MCOutbryk.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" column="18" lean-forward="false" selection-start-line="3" selection-start-column="18" selection-end-line="3" selection-end-column="18" />
+          <folding>
+            <element signature="e#113#122#0" expanded="true" />
           </folding>
         </state>
       </provider>
