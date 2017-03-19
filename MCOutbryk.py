@@ -10,6 +10,7 @@ import os
 import re
 import subprocess
 from argparse import (ArgumentParser)
+from time import localtime, strftime
 
 
 def parse_args():
@@ -120,7 +121,10 @@ def main():
     outdir = args.results_dir[0]
     num_procs = args.processes[0]
     high_filter = args.delete_highly_divergent
-    print(high_filter)
+    subprocess.call(['mkdir ' + outdir], stdout=subprocess.PIPE, shell=True)
+    log = open(outdir + '/mcOutbryk.log', 'w')
+    log.write(strftime("%Y-%m-%d %H:%M:%S", localtime()) + ': Start\n')
+    log.close()
     ref = os.path.basename(reference).rstrip('.fasta')
     ref_ctx = str(ref + ".ctx")
     create_ref_binary(outdir, reference)
@@ -128,15 +132,24 @@ def main():
     subprocess.call(["cat " + outdir + "/to_be_processed.txt | parallel -j " +
                      num_procs + " --colsep '\t' mccortex63 build -s {1} -k 33 -Q 15 -p -n 500M -m 16GB  -2 {2}:{3} " + outdir + "/raw/{1}.ctx"],
                     stdout=subprocess.PIPE, shell=True)
+    log = open(outdir + '/mcOutbryk.log', 'a')
+    log.write(strftime("%Y-%m-%d %H:%M:%S", localtime()) + ': Raw graphs created \n')
+    log.close()
     subprocess.call([
         "cat " + outdir + "/to_be_processed.txt | parallel -j " + num_procs + " --colsep '\t' mccortex63 clean -m 8G -o " +
         outdir + "/clean/{1}.ctx " + outdir + "/raw/{1}.ctx"], stdout=subprocess.PIPE, shell=True)
+    log = open(outdir + '/mcOutbryk.log', 'a')
+    log.write(strftime("%Y-%m-%d %H:%M:%S", localtime()) + ': Samples cleaned' '\n')
     subprocess.call(["find " + outdir +"/clean -size 0 -delete"], stdout=subprocess.PIPE, shell=True)
     clean_files = [f[:-4] for f in os.listdir('./'+ outdir +'/clean')]
     not_cleaned = set(samples) - set(clean_files)
     uncleaned = open(outdir + '/low_coverage_samples.txt', 'w')
     [uncleaned.write(uc + '\n') for uc in not_cleaned]
     uncleaned.close()
+    log.write('Samples not cleaned:' + str(len(not_cleaned)) + '\n')
+    if len(not_cleaned) > 0:
+        [log.write(uc + '\n') for uc in not_cleaned]
+    log.close()
     cleaned = open(outdir + '/cleaned.txt', 'w')
     [cleaned.write(cl + '\n') for cl in clean_files]
     cleaned.close()
@@ -144,23 +157,29 @@ def main():
         "cat " + outdir + "/cleaned.txt | parallel -j " + num_procs + " mcBubble.py {}.ctx " + ref_ctx + " " + reference + " " + outdir]
         , stdout=subprocess.PIPE, shell=True)
     individual_vcfs = [f for f in os.listdir('./' + outdir ) if f.endswith('.final.vcf')]
+    log = open(outdir + '/mcOutbryk.log', 'a')
+    log.write('Called SNPs per sample:'+ '\n')
     SNV_dict ={}
     for vcf in individual_vcfs:
         vcf_sum = summary(outdir + '/' + vcf)
-        print(vcf_sum[0], vcf_sum[1])
+        log.write(str(vcf_sum[0]) +': ' + str(vcf_sum[1]) + '\n')
         SNV_dict[vcf_sum[0][:-14]] = int(vcf_sum[1])
     highly_divergent = [f for f in SNV_dict if SNV_dict[f] > 5000]
     if len(highly_divergent) > 0:
+        log.write('Highly divergent isolates detected!')
         print('highly divergent isolates detected!')
         for f in highly_divergent:
             print(f)
+            log.write(f)
         if high_filter == 'yes':
-            print('highly divergent isolates will be deleted from further analyses!')
+            log.write('Highly divergent isolates will not be included in variant list!')
+            print('Highly divergent isolates will not be included in variant list!')
             for f in highly_divergent:
                 subprocess.call(["rm " + outdir + '/' + f + '.ctx.final.vcf'], stdout=subprocess.PIPE, shell=True)
             samples = list(set(samples) - set(highly_divergent))
             print(samples)
         else:
+            log.write('You have chosen to include highly divergent isolates in construction variant list!')
             print('highly divergent isolates will be included in further analyses!')
     subprocess.call(["for f in " + outdir + "/*.final.vcf; do bgzip $f; done"], stdout=subprocess.PIPE, shell=True)
     subprocess.call(["for f in " + outdir + "/*.final.vcf.gz; do bcftools index $f; done"], stdout=subprocess.PIPE,
@@ -186,6 +205,10 @@ def main():
                 fasta_out.write(create_consensus(outdir + "/" + vcf) + '\n')
     subprocess.call(['rm '+outdir + "/*.final.vcf.gz; rm " + outdir + "/*.final.vcf.gz.csi"]
                     , stdout=subprocess.PIPE, shell=True)
+
+    log.write(strftime("%Y-%m-%d %H:%M:%S", localtime()) + ': End ')
+
+
 if __name__ == '__main__':
     main()
 
