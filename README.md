@@ -3,7 +3,7 @@ SNP calling pipeline using mccortex
 
 Inspired by/follow up of  https://github.com/iqbal-lab/outbryk.git
 
-# requirements:
+### requirements:
 
 bcftools
 
@@ -13,7 +13,9 @@ bwa
 
 python3
 
-# Installation:
+mccortex
+
+### Installation:
 
 Clone this repository:
 ```
@@ -34,7 +36,7 @@ make MAXK=63 all
 
 Add the mccortex63 binary and the mccortex/scripts folder to your path 
 
-# Execution
+### Execution
 Execute the pipeline in the folder with illumina fastq.gz files of the isolates you are interested in.
 Create a 1 column list with the sample names and  decide on an appropriate reference sequence.
 
