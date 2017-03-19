@@ -44,7 +44,7 @@ To run mcOutbryk:
 ```
 MCOutbryk.py --reference reference.fasta --sample_list your_sample_list.txt --results_dir directory_for_results --processes parallel_processes
 ```
-Warning: while this pipeline is generally heavy on the RAM ussage, buidling the uncleaned graphs takes about 10 Gb of memory per process,
+Warning: while this pipeline is generally heavy on the RAM usage, buidling the uncleaned graphs takes about 10 Gb of memory per process,
 it is recommended to perform 1 process per 10 Gb of memory (I run 10 parallel processes on a 128 Gb machine) 
 
 The pipeline does the following:
