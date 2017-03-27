@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="e4d8ca7f-eab2-4b9a-977d-a7902b6c380e" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MCOutbryk.py" afterPath="$PROJECT_DIR$/MCOutbryk.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -380,7 +379,14 @@
       <option name="project" value="LOCAL" />
       <updated>1490637138813</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="forgot a '\n' in writing highly divergent to log">
+      <created>1490637836898</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1490637836898</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -438,7 +444,8 @@
     <MESSAGE value="included multiple checks to catch highly divergent, low coverage and otherwise difficult samples" />
     <MESSAGE value="changed 'parallel' to 'parallel --gnu' to avoid compatibility issues with different linux distros" />
     <MESSAGE value="cutoff for 'highly divergent' can now be set" />
-    <option name="LAST_COMMIT_MESSAGE" value="cutoff for 'highly divergent' can now be set" />
+    <MESSAGE value="forgot a '\n' in writing highly divergent to log" />
+    <option name="LAST_COMMIT_MESSAGE" value="forgot a '\n' in writing highly divergent to log" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
