@@ -4,7 +4,6 @@
 # todo: flag, log, exclude highly divergent samples (> 10,000 SNPs) from snp list of isolates to be used for genotyping
 # todo: write samples with empty cov.vcf files to log
 # todo: start from different points, inputs (fastq, fastq.gz, bam, (raw) ctx)
-# Todo: fix problems with parallel (change to parallel --gnu)
 
 import os
 import re
