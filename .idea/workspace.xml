@@ -54,8 +54,8 @@
       <file leaf-file-name="MCOutbryk.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/MCOutbryk.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2781">
-              <caret line="5" column="77" lean-forward="false" selection-start-line="5" selection-start-column="77" selection-end-line="5" selection-end-column="77" />
+            <state relative-caret-position="324">
+              <caret line="169" column="67" lean-forward="false" selection-start-line="169" selection-start-column="67" selection-end-line="169" selection-end-column="67" />
               <folding>
                 <element signature="e#296#305#0" expanded="true" />
               </folding>
@@ -352,7 +352,14 @@
       <option name="project" value="LOCAL" />
       <updated>1490630653564</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="changed 'parallel' to 'parallel --gnu' to avoid compatibility issues with different linux distros">
+      <created>1490636061481</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1490636061481</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -408,7 +415,8 @@
     <MESSAGE value="Changed back mccortex vcfcov parameters; may have to exclude samples that differ by a large number of SNPs/variants" />
     <MESSAGE value="Added todo for handling highly divergent isolates" />
     <MESSAGE value="included multiple checks to catch highly divergent, low coverage and otherwise difficult samples" />
-    <option name="LAST_COMMIT_MESSAGE" value="included multiple checks to catch highly divergent, low coverage and otherwise difficult samples" />
+    <MESSAGE value="changed 'parallel' to 'parallel --gnu' to avoid compatibility issues with different linux distros" />
+    <option name="LAST_COMMIT_MESSAGE" value="changed 'parallel' to 'parallel --gnu' to avoid compatibility issues with different linux distros" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -680,8 +688,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/MCOutbryk.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2781">
-          <caret line="5" column="77" lean-forward="false" selection-start-line="5" selection-start-column="77" selection-end-line="5" selection-end-column="77" />
+        <state relative-caret-position="324">
+          <caret line="169" column="67" lean-forward="false" selection-start-line="169" selection-start-column="67" selection-end-line="169" selection-end-column="67" />
           <folding>
             <element signature="e#296#305#0" expanded="true" />
           </folding>

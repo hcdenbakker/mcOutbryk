@@ -30,6 +30,9 @@ def parse_args():
         help='number of processes to run in parallel')
     parser.add_argument('--delete_highly_divergent',
                         choices=['yes', 'no'], default= 'yes', help='delete highly divergent isolates automatically (default: yes)')
+    parser.add_argument('--div_cutoff', nargs='?', const=5000, type=int,
+                        help='number of SNPs used as cutoff to define highly divergent isolates (default: 5000)')
+
     return parser.parse_args()
 
 
@@ -120,6 +123,7 @@ def main():
     outdir = args.results_dir[0]
     num_procs = args.processes[0]
     high_filter = args.delete_highly_divergent
+    cutoff = args.div_cutoff
     subprocess.call(['mkdir ' + outdir], stdout=subprocess.PIPE, shell=True)
     log = open(outdir + '/mcOutbryk.log', 'w')
     log.write(strftime("%Y-%m-%d %H:%M:%S", localtime()) + ': Start\n')
@@ -163,7 +167,7 @@ def main():
         vcf_sum = summary(outdir + '/' + vcf)
         log.write(str(vcf_sum[0]) +': ' + str(vcf_sum[1]) + '\n')
         SNV_dict[vcf_sum[0][:-14]] = int(vcf_sum[1])
-    highly_divergent = [f for f in SNV_dict if SNV_dict[f] > 5000]
+    highly_divergent = [f for f in SNV_dict if SNV_dict[f] > cutoff]
     if len(highly_divergent) > 0:
         log.write('Highly divergent isolates detected!')
         print('highly divergent isolates detected!')
