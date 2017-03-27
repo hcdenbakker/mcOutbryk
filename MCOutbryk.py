@@ -175,7 +175,7 @@ def main():
             print(f)
             log.write(f + '\n')
         if high_filter == 'yes':
-            log.write('Highly divergent isolates will not be included in variant list!')
+            log.write('Highly divergent isolates will not be included in variant list!'+ '\n')
             print('Highly divergent isolates will not be included in variant list!')
             for f in highly_divergent:
                 subprocess.call(["rm " + outdir + '/' + f + '.ctx.final.vcf'], stdout=subprocess.PIPE, shell=True)
