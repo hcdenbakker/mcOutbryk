@@ -173,7 +173,7 @@ def main():
         print('highly divergent isolates detected!')
         for f in highly_divergent:
             print(f)
-            log.write(f)
+            log.write(f + '\n')
         if high_filter == 'yes':
             log.write('Highly divergent isolates will not be included in variant list!')
             print('Highly divergent isolates will not be included in variant list!')
