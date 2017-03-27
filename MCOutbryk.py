@@ -4,7 +4,7 @@
 # todo: flag, log, exclude highly divergent samples (> 10,000 SNPs) from snp list of isolates to be used for genotyping
 # todo: write samples with empty cov.vcf files to log
 # todo: start from different points, inputs (fastq, fastq.gz, bam, (raw) ctx)
-
+# Todo: fix problems with parallel (change to parallel --gnu)
 
 import os
 import re
@@ -129,14 +129,14 @@ def main():
     ref_ctx = str(ref + ".ctx")
     create_ref_binary(outdir, reference)
     perform_actions_list(samples, outdir)
-    subprocess.call(["cat " + outdir + "/to_be_processed.txt | parallel -j " +
+    subprocess.call(["cat " + outdir + "/to_be_processed.txt | parallel --gnu -j " +
                      num_procs + " --colsep '\t' mccortex63 build -s {1} -k 33 -Q 15 -p -n 500M -m 16GB  -2 {2}:{3} " + outdir + "/raw/{1}.ctx"],
                     stdout=subprocess.PIPE, shell=True)
     log = open(outdir + '/mcOutbryk.log', 'a')
     log.write(strftime("%Y-%m-%d %H:%M:%S", localtime()) + ': Raw graphs created \n')
     log.close()
     subprocess.call([
-        "cat " + outdir + "/to_be_processed.txt | parallel -j " + num_procs + " --colsep '\t' mccortex63 clean -m 8G -o " +
+        "cat " + outdir + "/to_be_processed.txt | parallel --gnu -j " + num_procs + " --colsep '\t' mccortex63 clean -m 8G -o " +
         outdir + "/clean/{1}.ctx " + outdir + "/raw/{1}.ctx"], stdout=subprocess.PIPE, shell=True)
     log = open(outdir + '/mcOutbryk.log', 'a')
     log.write(strftime("%Y-%m-%d %H:%M:%S", localtime()) + ': Samples cleaned' '\n')
@@ -154,7 +154,7 @@ def main():
     [cleaned.write(cl + '\n') for cl in clean_files]
     cleaned.close()
     subprocess.call([
-        "cat " + outdir + "/cleaned.txt | parallel -j " + num_procs + " mcBubble.py {}.ctx " + ref_ctx + " " + reference + " " + outdir]
+        "cat " + outdir + "/cleaned.txt | parallel --gnu -j " + num_procs + " mcBubble.py {}.ctx " + ref_ctx + " " + reference + " " + outdir]
         , stdout=subprocess.PIPE, shell=True)
     individual_vcfs = [f for f in os.listdir('./' + outdir ) if f.endswith('.final.vcf')]
     log = open(outdir + '/mcOutbryk.log', 'a')
@@ -189,7 +189,7 @@ def main():
     subprocess.call(["merged_stripper.py " + outdir + "/final.merged.vcf > " + outdir + "/final.stripped.vcf"],
                     stdout=subprocess.PIPE, shell=True)
     subprocess.call([
-        "cat " + sample_list + "| parallel mc_genotype.py " + reference + " " + outdir + "/final.stripped.vcf {} " + outdir]
+        "cat " + sample_list + "| parallel --gnu mc_genotype.py " + reference + " " + outdir + "/final.stripped.vcf {} " + outdir]
         , stdout=subprocess.PIPE, shell=True)
     fasta_out = open(outdir + '/MC_consensus.fasta', 'w')
     cov_vcfs = [f for f in os.listdir('./' + outdir) if f.endswith('.cov.vcf')]
