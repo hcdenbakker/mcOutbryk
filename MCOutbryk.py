@@ -30,7 +30,7 @@ def parse_args():
         help='number of processes to run in parallel')
     parser.add_argument('--delete_highly_divergent',
                         choices=['yes', 'no'], default= 'yes', help='delete highly divergent isolates automatically (default: yes)')
-    parser.add_argument('--div_cutoff', nargs='?', const=5000, type=int,
+    parser.add_argument('--div_cutoff', nargs='?', const=5000, type=int, default = 5000,
                         help='number of SNPs used as cutoff to define highly divergent isolates (default: 5000)')
 
     return parser.parse_args()
