@@ -14,7 +14,7 @@ def bubble_call(clean_binary, reference_binary, reference, outdir):
                      " clean/" + clean_binary], stdout=subprocess.PIPE, shell=True)
     subprocess.call(["cd " + outdir + "; mccortex63 bubbles -m 8G -o " + clean_binary + "_bubbles.txt.gz --haploid 0 -S -f " +
                      clean_binary + "_plus_" + reference_binary], stdout=subprocess.PIPE, shell=True)
-    subprocess.call(["cd " + outdir + "; cortex_print_flanks.sh " + clean_binary + "_bubbles.txt.gz " +
+    subprocess.call(["cd " + outdir + "; mccortex_print_flanks.sh " + clean_binary + "_bubbles.txt.gz " +
                      "> " + clean_binary + ".flanks" ], stdout=subprocess.PIPE, shell=True)
     subprocess.call(["cd " + outdir + "; bwa mem ref/" + ref_bwa + " "+ clean_binary + ".flanks > " +
                     clean_binary +".sam"], stdout=subprocess.PIPE, shell=True)
