@@ -123,6 +123,7 @@ def main():
     num_procs = args.processes[0]
     high_filter = args.delete_highly_divergent
     cutoff = args.div_cutoff
+    print(cutoff)
     subprocess.call(['mkdir ' + outdir], stdout=subprocess.PIPE, shell=True)
     log = open(outdir + '/mcOutbryk.log', 'w')
     log.write(strftime("%Y-%m-%d %H:%M:%S", localtime()) + ': Start\n')
