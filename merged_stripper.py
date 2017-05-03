@@ -19,6 +19,6 @@ with open(argv[1], 'r') as gz:
             variants.append(variant[:10])
 for h in header:
     print(h)
-print('\t'.join(columns.split('\t')[:10]))
+print('\t'.join(columns.split('\t')[:9]) + '\tDummy')
 for v in variants:
     print('\t'.join(v))

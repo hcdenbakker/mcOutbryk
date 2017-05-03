@@ -113,6 +113,40 @@ def create_consensus(infile):
 
     return consensus
 
+def create_consensus_from_geno(infile):
+    consensus = ''
+    with open(infile, 'r') as gz:
+        for line in gz:
+            line = line.rstrip('\n')
+            if line[0] == '#':
+                continue
+            else:
+                # line = line.rstrip('\n')
+                variant = line.split('\t')
+                # print(line.decode('utf8').rstrip('\n').split('\t'))
+                if len(variant[4]) > 1:
+                    continue
+                else:
+                    v = variant[-1].split(':')
+                    if v[0] == './.':
+                        consensus += '?'
+                    elif variant[1] == '0' == variant[2]:
+                        consensus += '-'
+                    elif v[0] == '0/0' and v[-1] == '0':
+                        consensus += '?'
+                    elif v[0] == '0/0' and int(v[-1]) > 0:
+                        consensus += variant[3]
+                    elif v[0] == '1/1' and v[-1] == '0':
+                        consensus += '?'
+                    elif v[0] == '1/1' and int(v[-1]) > 0:
+                        consensus += variant[4]
+                    elif v[0] == '0/1' and v[-1] == '0':
+                        consensus += '?'
+                    elif v[0] == '0/1' and int(v[-1]) > 0:
+                        consensus += 'N'
+
+    return consensus
+
 
 def main():
     args = parse_args()
@@ -207,6 +241,21 @@ def main():
                 fasta_out.write('>' + vcf[:-8]  + '\n')
                 fasta_out.write(create_consensus(outdir + "/" + vcf) + '\n')
     subprocess.call(['rm '+outdir + "/*.final.vcf.gz; rm " + outdir + "/*.final.vcf.gz.csi"]
+                    , stdout=subprocess.PIPE, shell=True)
+
+    fasta_out_geno = open(outdir + '/MC_consensus_geno.fasta', 'w')
+    geno_vcfs = [f for f in os.listdir('./' + outdir) if f.endswith('.geno.vcf')]
+    for vcf in geno_vcfs:
+        if os.stat(outdir + "/" + vcf).st_size == 0:
+            print(vcf + ' is an empty file!')
+        else:
+            if vcf[:-9] in highly_divergent:
+                fasta_out_geno.write('>' + vcf[:-9] + '_highly_divergent' + '\n')
+                fasta_out_geno.write(create_consensus_from_geno(outdir + "/" + vcf) + '\n')
+            else:
+                fasta_out_geno.write('>' + vcf[:-9] + '\n')
+                fasta_out_geno.write(create_consensus_from_geno(outdir + "/" + vcf) + '\n')
+    subprocess.call(['rm ' + outdir + "/*.final.vcf.gz; rm " + outdir + "/*.final.vcf.gz.csi"]
                     , stdout=subprocess.PIPE, shell=True)
 
     log.write(strftime("%Y-%m-%d %H:%M:%S", localtime()) + ': End ')
