@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e4d8ca7f-eab2-4b9a-977d-a7902b6c380e" name="Default" comment="included script using the vcf genotyping; MCoutbryk now produces a consensus based SNP fasta and a genoytyping based SNP fasta">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-    </list>
+    <list default="true" id="e4d8ca7f-eab2-4b9a-977d-a7902b6c380e" name="Default" comment="included script using the vcf genotyping; MCoutbryk now produces a consensus based SNP fasta and a genoytyping based SNP fasta" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
