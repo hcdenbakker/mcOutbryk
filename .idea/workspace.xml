@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e4d8ca7f-eab2-4b9a-977d-a7902b6c380e" name="Default" comment="included script using the vcf genotyping; MCoutbryk now produces a consensus based SNP fasta and a genoytyping based SNP fasta">
+    <list default="true" id="e4d8ca7f-eab2-4b9a-977d-a7902b6c380e" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MCOutbryk.py" afterPath="$PROJECT_DIR$/MCOutbryk.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mcBubble.py" afterPath="$PROJECT_DIR$/mcBubble.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mc_genotype.py" afterPath="$PROJECT_DIR$/mc_genotype.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mc_real_genotype.py" afterPath="$PROJECT_DIR$/mc_real_genotype.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -52,11 +54,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MCOutbryk.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="MCOutbryk.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/MCOutbryk.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="246" column="45" lean-forward="false" selection-start-line="246" selection-start-column="45" selection-end-line="246" selection-end-column="45" />
+            <state relative-caret-position="-464">
+              <caret line="175" column="120" lean-forward="false" selection-start-line="175" selection-start-column="120" selection-end-line="175" selection-end-column="120" />
               <folding>
                 <element signature="e#272#281#0" expanded="true" />
               </folding>
@@ -67,8 +69,8 @@
       <file leaf-file-name="mc_genotype.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mc_genotype.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
-              <caret line="28" column="0" lean-forward="true" selection-start-line="6" selection-start-column="34" selection-end-line="28" selection-end-column="0" />
+            <state relative-caret-position="510">
+              <caret line="34" column="31" lean-forward="false" selection-start-line="34" selection-start-column="31" selection-end-line="34" selection-end-column="31" />
               <folding>
                 <element signature="e#24#41#0" expanded="true" />
               </folding>
@@ -79,8 +81,8 @@
       <file leaf-file-name="mc_real_genotype.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mc_real_genotype.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="405">
-              <caret line="27" column="57" lean-forward="true" selection-start-line="27" selection-start-column="57" selection-end-line="27" selection-end-column="57" />
+            <state relative-caret-position="168">
+              <caret line="63" column="32" lean-forward="false" selection-start-line="63" selection-start-column="32" selection-end-line="63" selection-end-column="32" />
               <folding>
                 <element signature="e#24#41#0" expanded="true" />
               </folding>
@@ -88,11 +90,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="mcBubble.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="mcBubble.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/mcBubble.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-72">
-              <caret line="16" column="46" lean-forward="false" selection-start-line="16" selection-start-column="46" selection-end-line="16" selection-end-column="46" />
+            <state relative-caret-position="48">
+              <caret line="24" column="62" lean-forward="false" selection-start-line="24" selection-start-column="62" selection-end-line="24" selection-end-column="62" />
               <folding>
                 <element signature="e#25#34#0" expanded="true" />
               </folding>
@@ -128,11 +130,11 @@
       <list>
         <option value="$PROJECT_DIR$/mc_vcf_filter.py" />
         <option value="$PROJECT_DIR$/mc_genotyper.py" />
-        <option value="$PROJECT_DIR$/mcBubble.py" />
         <option value="$PROJECT_DIR$/merged_stripper.py" />
-        <option value="$PROJECT_DIR$/mc_real_genotype.py" />
-        <option value="$PROJECT_DIR$/mc_genotype.py" />
         <option value="$PROJECT_DIR$/MCOutbryk.py" />
+        <option value="$PROJECT_DIR$/mc_genotype.py" />
+        <option value="$PROJECT_DIR$/mc_real_genotype.py" />
+        <option value="$PROJECT_DIR$/mcBubble.py" />
       </list>
     </option>
   </component>
@@ -429,7 +431,14 @@
       <option name="project" value="LOCAL" />
       <updated>1493854861855</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Some edits in MCOutbryk.py and mc_genotype.py">
+      <created>1493863485285</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1493863485285</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -490,7 +499,8 @@
     <MESSAGE value="forgot a '\n' in writing highly divergent to log" />
     <MESSAGE value="added 'bash' to subprocess calling mccortex_print_flanks.sh" />
     <MESSAGE value="included script using the vcf genotyping; MCoutbryk now produces a consensus based SNP fasta and a genoytyping based SNP fasta" />
-    <option name="LAST_COMMIT_MESSAGE" value="included script using the vcf genotyping; MCoutbryk now produces a consensus based SNP fasta and a genoytyping based SNP fasta" />
+    <MESSAGE value="Some edits in MCOutbryk.py and mc_genotype.py" />
+    <option name="LAST_COMMIT_MESSAGE" value="Some edits in MCOutbryk.py and mc_genotype.py" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -882,12 +892,40 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mcBubble.py">
+    <entry file="file://$PROJECT_DIR$/merged_stripper.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-72">
-          <caret line="16" column="46" lean-forward="false" selection-start-line="16" selection-start-column="46" selection-end-line="16" selection-end-column="46" />
+        <state relative-caret-position="93">
+          <caret line="8" column="24" lean-forward="false" selection-start-line="8" selection-start-column="24" selection-end-line="8" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MCOutbryk.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-464">
+          <caret line="175" column="120" lean-forward="false" selection-start-line="175" selection-start-column="120" selection-end-line="175" selection-end-column="120" />
           <folding>
-            <element signature="e#25#34#0" expanded="true" />
+            <element signature="e#272#281#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mc_genotype.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="34" column="31" lean-forward="false" selection-start-line="34" selection-start-column="31" selection-end-line="34" selection-end-column="31" />
+          <folding>
+            <element signature="e#24#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mc_real_genotype.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="63" column="32" lean-forward="false" selection-start-line="63" selection-start-column="32" selection-end-line="63" selection-end-column="32" />
+          <folding>
+            <element signature="e#24#41#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -900,40 +938,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/merged_stripper.py">
+    <entry file="file://$PROJECT_DIR$/mcBubble.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="93">
-          <caret line="8" column="24" lean-forward="false" selection-start-line="8" selection-start-column="24" selection-end-line="8" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mc_genotype.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="28" column="0" lean-forward="true" selection-start-line="6" selection-start-column="34" selection-end-line="28" selection-end-column="0" />
+        <state relative-caret-position="48">
+          <caret line="24" column="62" lean-forward="false" selection-start-line="24" selection-start-column="62" selection-end-line="24" selection-end-column="62" />
           <folding>
-            <element signature="e#24#41#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mc_real_genotype.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="27" column="57" lean-forward="true" selection-start-line="27" selection-start-column="57" selection-end-line="27" selection-end-column="57" />
-          <folding>
-            <element signature="e#24#41#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/MCOutbryk.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="246" column="45" lean-forward="false" selection-start-line="246" selection-start-column="45" selection-end-line="246" selection-end-column="45" />
-          <folding>
-            <element signature="e#272#281#0" expanded="true" />
+            <element signature="e#25#34#0" expanded="true" />
           </folding>
         </state>
       </provider>

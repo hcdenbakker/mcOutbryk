@@ -167,13 +167,13 @@ def main():
     create_ref_binary(outdir, reference)
     perform_actions_list(samples, outdir)
     subprocess.call(["cat " + outdir + "/to_be_processed.txt | parallel --gnu -j " +
-                     num_procs + " --colsep '\t' mccortex63 build -s {1} -k 33 -Q 15 -p -n 500M -m 16GB  -2 {2}:{3} " + outdir + "/raw/{1}.ctx"],
+                     num_procs + " --colsep '\t' mccortex63 build -q -s {1} -k 33 -Q 15 -p -n 500M -m 16GB  -2 {2}:{3} " + outdir + "/raw/{1}.ctx"],
                     stdout=subprocess.PIPE, shell=True)
     log = open(outdir + '/mcOutbryk.log', 'a')
     log.write(strftime("%Y-%m-%d %H:%M:%S", localtime()) + ': Raw graphs created \n')
     log.close()
     subprocess.call([
-        "cat " + outdir + "/to_be_processed.txt | parallel --gnu -j " + num_procs + " --colsep '\t' mccortex63 clean -m 8G -o " +
+        "cat " + outdir + "/to_be_processed.txt | parallel --gnu -j " + num_procs + " --colsep '\t' mccortex63 clean -q -m 8G -o " +
         outdir + "/clean/{1}.ctx " + outdir + "/raw/{1}.ctx"], stdout=subprocess.PIPE, shell=True)
     log = open(outdir + '/mcOutbryk.log', 'a')
     log.write(strftime("%Y-%m-%d %H:%M:%S", localtime()) + ': Samples cleaned' '\n')
