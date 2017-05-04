@@ -242,7 +242,9 @@ def main():
                 fasta_out.write(create_consensus(outdir + "/" + vcf) + '\n')
     subprocess.call(['rm '+outdir + "/*.final.vcf.gz; rm " + outdir + "/*.final.vcf.gz.csi"]
                     , stdout=subprocess.PIPE, shell=True)
-
+    subprocess.call([
+        "cat " + sample_list + "| parallel --gnu mc_real_genotype.py " + reference + " " + outdir + "/final.stripped.vcf {} " + outdir]
+        , stdout=subprocess.PIPE, shell=True)
     fasta_out_geno = open(outdir + '/MC_consensus_geno.fasta', 'w')
     geno_vcfs = [f for f in os.listdir('./' + outdir) if f.endswith('.geno.vcf')]
     for vcf in geno_vcfs:
@@ -255,7 +257,7 @@ def main():
             else:
                 fasta_out_geno.write('>' + vcf[:-9] + '\n')
                 fasta_out_geno.write(create_consensus_from_geno(outdir + "/" + vcf) + '\n')
-    subprocess.call(['rm ' + outdir + "/*.final.vcf.gz; rm " + outdir + "/*.final.vcf.gz.csi"]
+    subprocess.call(['rm ' + outdir + "/*.final.vcf.gz; rm " + outdir + "/*.final.vcf.gz.csi; rm " + outdir + "/*.cov1.vcf"]
                     , stdout=subprocess.PIPE, shell=True)
 
     log.write(strftime("%Y-%m-%d %H:%M:%S", localtime()) + ': End ')

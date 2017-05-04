@@ -4,7 +4,7 @@ import subprocess
 import os
 from sys import argv
 
-def remove_dummy(vcf_in, vcf_out)
+def remove_dummy(vcf_in, vcf_out):
     header = []
     variants =[]
     SNVsites = []
