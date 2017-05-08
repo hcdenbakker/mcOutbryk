@@ -58,7 +58,7 @@ def create_ref_binary(outdir, reference):
     ref = os.path.basename(reference).rstrip('.fasta')
     ref_bwa = os.path.basename(reference)
     subprocess.call(
-        ["mccortex63 build -s " + ref + " -k 33 -m 8GB -f -t 32 -1 " + reference + " " + outdir + "/ref/" + ref
+        ["mccortex63 build -q -s " + ref + " -k 33 -m 8GB -f -t 32 -1 " + reference + " " + outdir + "/ref/" + ref
          + ".ctx"], stdout=subprocess.PIPE, shell=True)
     subprocess.call(["cp " + reference + " " + outdir + "/ref; bwa index " + outdir + "/ref/" + ref_bwa],
                     stdout=subprocess.PIPE, shell=True)
@@ -81,6 +81,55 @@ def summary(vcf):
             if line[0] == '#': continue
             else: count += 1
     return name, count
+
+
+def create_master_vcf(list, outdir):
+    #get minimum information to create new vcf from list[0]
+    with open(outdir +'/'+ list[0], 'r') as m:
+        for line in m:
+            if line.startswith('##contig='):
+                contig = line
+                chrom = line.split(',')[0].split('=')[-1]
+                print(chrom)
+
+    #create dict to keep track of position, ref, alt
+    master_dict = {}
+    for vcf in list:
+        with open(outdir +'/'+ vcf, 'r') as v:
+            for line in v:
+                if line[0] == '#':
+                    continue
+                else:
+                    variant = line.split('\t')
+                    if len(variant[4]) > 1:
+                        continue
+                    else:
+                        if int(variant[1]) in master_dict:
+                            if variant[4] in master_dict[int(variant[1])][1]:
+                                continue
+                            else:
+                                master_dict[int(variant[1])][1].append(variant[4])
+                        else:
+                            master_dict[int(variant[1])] = (variant[3], [variant[4]])
+    #Make the list and build the vcf
+    sites = [a for a in master_dict]
+    with open(outdir +'/simple_merge.vcf', 'w') as merged_vcf:
+        merged_vcf.write('##fileformat=VCFv4.2\n')
+        merged_vcf.write('##FORMAT=<ID=GT,Number=1,Type=String,Description="Genotype">\n' +
+                         '##FORMAT=<ID=K33R,Number=A,Type=Integer,Description="Coverage on ref (k=33): sum(kmer_covs) / exp_num_kmers">\n' +
+                         '##FORMAT=<ID=K33A,Number=A,Type=Integer,Description="Coverage on alt (k=33): sum(kmer_covs) / exp_num_kmers">\n')
+        merged_vcf.write(contig)
+        merged_vcf.write('#CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO\tFORMAT\tDummy\n')
+        for s in sorted(sites):
+            #CP002002.1	1415	.	C	T	.	PASS	BUBBLE=357;K33	K33R:K33A	.:.
+            merged_vcf.write(chrom + '\t' + str(s) + '\t' + '.\t' + str(master_dict[s][0]) + '\t' +
+                             ','.join(master_dict[s][1]) + '\t' + '.' + '\t' + 'PASS' +
+                             '\t' + '.' + '\t' + 'K33R:K33A' + '\t' + '.:.\n')
+            #print(s, master_dict[s][0], master_dict[s][1])
+
+
+
+
 
 
 def create_consensus(infile):
@@ -216,17 +265,12 @@ def main():
             samples = list(set(samples) - set(highly_divergent))
             print(samples)
         else:
-            log.write('You have chosen to include highly divergent isolates in construction variant list!')
+            log.write('You have chosen to include highly divergent isolates in construction variant list!\n')
             print('highly divergent isolates will be included in further analyses!')
-    subprocess.call(["for f in " + outdir + "/*.final.vcf; do bgzip $f; done"], stdout=subprocess.PIPE, shell=True)
-    subprocess.call(["for f in " + outdir + "/*.final.vcf.gz; do bcftools index $f; done"], stdout=subprocess.PIPE,
-                    shell=True)
-    subprocess.call(["bcftools merge " + outdir + "/*.final.vcf.gz > " + outdir + "/final.merged.vcf"],
-                    stdout=subprocess.PIPE, shell=True)
-    subprocess.call(["merged_stripper.py " + outdir + "/final.merged.vcf > " + outdir + "/final.stripped.vcf"],
-                    stdout=subprocess.PIPE, shell=True)
+    create_master_vcf([f for f in os.listdir('./' + outdir) if f.endswith('.final.vcf')], outdir)
+    subprocess.call(['rm '+outdir + "/*.final.vcf"],stdout=subprocess.PIPE, shell=True)
     subprocess.call([
-        "cat " + sample_list + "| parallel --gnu mc_genotype.py " + reference + " " + outdir + "/final.stripped.vcf {} " + outdir]
+        "cat " + sample_list + "| parallel --gnu mc_genotype.py " + reference + " " + outdir + "/simple_merge.vcf {} " + outdir]
         , stdout=subprocess.PIPE, shell=True)
     fasta_out = open(outdir + '/MC_consensus.fasta', 'w')
     cov_vcfs = [f for f in os.listdir('./' + outdir) if f.endswith('.cov.vcf')]
@@ -243,7 +287,7 @@ def main():
     subprocess.call(['rm '+outdir + "/*.final.vcf.gz; rm " + outdir + "/*.final.vcf.gz.csi"]
                     , stdout=subprocess.PIPE, shell=True)
     subprocess.call([
-        "cat " + sample_list + "| parallel --gnu mc_real_genotype.py " + reference + " " + outdir + "/final.stripped.vcf {} " + outdir]
+        "cat " + sample_list + "| parallel --gnu mc_real_genotype.py " + reference + " " + outdir + "/simple_merge.vcf {} " + outdir]
         , stdout=subprocess.PIPE, shell=True)
     fasta_out_geno = open(outdir + '/MC_consensus_geno.fasta', 'w')
     geno_vcfs = [f for f in os.listdir('./' + outdir) if f.endswith('.geno.vcf')]
@@ -257,12 +301,10 @@ def main():
             else:
                 fasta_out_geno.write('>' + vcf[:-9] + '\n')
                 fasta_out_geno.write(create_consensus_from_geno(outdir + "/" + vcf) + '\n')
-    subprocess.call(['rm ' + outdir + "/*.final.vcf.gz; rm " + outdir + "/*.final.vcf.gz.csi; rm " + outdir + "/*.cov1.vcf"]
-                    , stdout=subprocess.PIPE, shell=True)
+    subprocess.call(["rm " + outdir + "/*.cov1.vcf"], stdout=subprocess.PIPE, shell=True)
 
     log.write(strftime("%Y-%m-%d %H:%M:%S", localtime()) + ': End ')
 
 
 if __name__ == '__main__':
     main()
-
