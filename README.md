@@ -5,8 +5,6 @@ Inspired by/follow up of  https://github.com/iqbal-lab/outbryk.git
 
 ### requirements:
 
-bcftools (version 1.4-9 or higher)
-
 vcftools
 
 vcflib
