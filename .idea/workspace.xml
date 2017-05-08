@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="e4d8ca7f-eab2-4b9a-977d-a7902b6c380e" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MCOutbryk.py" afterPath="$PROJECT_DIR$/MCOutbryk.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -21,10 +20,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="mc_vcf_filter.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="mc_vcf_filter.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/mc_vcf_filter.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-36">
+            <state relative-caret-position="-42">
               <caret line="6" column="12" lean-forward="true" selection-start-line="6" selection-start-column="12" selection-end-line="6" selection-end-column="12" />
               <folding />
             </state>
@@ -51,11 +50,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MCOutbryk.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="MCOutbryk.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/MCOutbryk.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4650">
-              <caret line="310" column="0" lean-forward="true" selection-start-line="310" selection-start-column="0" selection-end-line="310" selection-end-column="0" />
+            <state relative-caret-position="132">
+              <caret line="272" column="50" lean-forward="false" selection-start-line="272" selection-start-column="49" selection-end-line="272" selection-end-column="50" />
               <folding>
                 <element signature="e#272#281#0" expanded="true" />
               </folding>
@@ -66,7 +65,7 @@
       <file leaf-file-name="mc_genotype.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mc_genotype.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="480">
+            <state relative-caret-position="510">
               <caret line="34" column="31" lean-forward="false" selection-start-line="34" selection-start-column="31" selection-end-line="34" selection-end-column="31" />
               <folding>
                 <element signature="e#24#41#0" expanded="true" />
@@ -441,14 +440,20 @@
       <option name="project" value="LOCAL" />
       <updated>1493866762796</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="wrote a function to replace 'bcftools merge'; on most systems the max vcfs to be merged is 1024,">
+      <created>1494211950631</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1494211950631</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="76" width="1280" height="728" extended-state="0" />
-    <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24375" sideWeight="0.49234137" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24375" sideWeight="0.49234137" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.27921093" sideWeight="0.503125" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -505,7 +510,8 @@
     <MESSAGE value="included script using the vcf genotyping; MCoutbryk now produces a consensus based SNP fasta and a genoytyping based SNP fasta" />
     <MESSAGE value="Some edits in MCOutbryk.py and mc_genotype.py" />
     <MESSAGE value="introduced -q to silence status output normally printed to STDERR" />
-    <option name="LAST_COMMIT_MESSAGE" value="introduced -q to silence status output normally printed to STDERR" />
+    <MESSAGE value="wrote a function to replace 'bcftools merge'; on most systems the max vcfs to be merged is 1024," />
+    <option name="LAST_COMMIT_MESSAGE" value="wrote a function to replace 'bcftools merge'; on most systems the max vcfs to be merged is 1024," />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -897,16 +903,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mc_genotype.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="480">
-          <caret line="34" column="31" lean-forward="false" selection-start-line="34" selection-start-column="31" selection-end-line="34" selection-end-column="31" />
-          <folding>
-            <element signature="e#24#41#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/mc_real_genotype.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="915">
@@ -927,6 +923,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/MCOutbryk.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="132">
+          <caret line="272" column="50" lean-forward="false" selection-start-line="272" selection-start-column="49" selection-end-line="272" selection-end-column="50" />
+          <folding>
+            <element signature="e#272#281#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/merged_stripper.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
@@ -935,21 +941,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mc_vcf_filter.py">
+    <entry file="file://$PROJECT_DIR$/mc_genotype.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-36">
-          <caret line="6" column="12" lean-forward="true" selection-start-line="6" selection-start-column="12" selection-end-line="6" selection-end-column="12" />
-          <folding />
+        <state relative-caret-position="510">
+          <caret line="34" column="31" lean-forward="false" selection-start-line="34" selection-start-column="31" selection-end-line="34" selection-end-column="31" />
+          <folding>
+            <element signature="e#24#41#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/MCOutbryk.py">
+    <entry file="file://$PROJECT_DIR$/mc_vcf_filter.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4650">
-          <caret line="310" column="0" lean-forward="true" selection-start-line="310" selection-start-column="0" selection-end-line="310" selection-end-column="0" />
-          <folding>
-            <element signature="e#272#281#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="-42">
+          <caret line="6" column="12" lean-forward="true" selection-start-line="6" selection-start-column="12" selection-end-line="6" selection-end-column="12" />
+          <folding />
         </state>
       </provider>
     </entry>
