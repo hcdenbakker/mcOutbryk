@@ -121,11 +121,9 @@ def create_master_vcf(list, outdir):
         merged_vcf.write(contig)
         merged_vcf.write('#CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO\tFORMAT\tDummy\n')
         for s in sorted(sites):
-            #CP002002.1	1415	.	C	T	.	PASS	BUBBLE=357;K33	K33R:K33A	.:.
             merged_vcf.write(chrom + '\t' + str(s) + '\t' + '.\t' + str(master_dict[s][0]) + '\t' +
                              ','.join(master_dict[s][1]) + '\t' + '.' + '\t' + 'PASS' +
                              '\t' + '.' + '\t' + 'K33R:K33A' + '\t' + '.:.\n')
-            #print(s, master_dict[s][0], master_dict[s][1])
 
 
 
