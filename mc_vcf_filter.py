@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+#filters vcf from bubble calling so it only contains SNPs with > 90% kmer coverage for the alt allele
+
 from sys import argv
 
 
