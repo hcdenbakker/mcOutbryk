@@ -282,8 +282,6 @@ def main():
             else:
                 fasta_out.write('>' + vcf[:-8]  + '\n')
                 fasta_out.write(create_consensus(outdir + "/" + vcf) + '\n')
-    subprocess.call(['rm '+outdir + "/*.final.vcf.gz; rm " + outdir + "/*.final.vcf.gz.csi"]
-                    , stdout=subprocess.PIPE, shell=True)
     subprocess.call([
         "cat " + sample_list + "| parallel --gnu mc_real_genotype.py " + reference + " " + outdir + "/simple_merge.vcf {} " + outdir]
         , stdout=subprocess.PIPE, shell=True)
