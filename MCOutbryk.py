@@ -255,7 +255,7 @@ def main():
     ref = os.path.basename(reference).rstrip('.fasta')
     ref_ctx = str(ref + ".ctx")
     if pre_calc_vcf:
-        pass
+        subprocess.call(["cp " + reference + " " + outdir + "/ref"], stdout=subprocess.PIPE, shell=True)
     else:
         create_ref_binary(outdir, reference)
     perform_actions_list(samples, outdir, num_procs)
