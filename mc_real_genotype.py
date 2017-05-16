@@ -61,7 +61,7 @@ def geno_cov(reference, calls_vcf, raw_ctx, outdir):
     kcov = average_kcov(outdir + "/" + sample + ".cov.vcf")
     remove_dummy(outdir + "/" + sample + ".cov.vcf", outdir + "/" + sample + ".cov1.vcf")
     subprocess.call(
-        ["mccortex63 vcfgeno -q --out " + outdir + "/" + sample + ".geno.vcf --kcov " + str(kcov) + " --ploidy 2 " +
+        ["mccortex63 vcfgeno -q -f --out " + outdir + "/" + sample + ".geno.vcf --kcov " + str(kcov) + " --ploidy 2 " +
          outdir + "/" + sample + ".cov1.vcf"], stdout=subprocess.PIPE, shell=True)
 
 def main():
