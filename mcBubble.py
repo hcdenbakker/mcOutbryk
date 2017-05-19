@@ -22,7 +22,7 @@ def bubble_call(clean_binary, reference_binary, reference, outdir):
                      "_bub.vcf " + clean_binary + "_bubbles.txt.gz ref/" + ref_bwa], stdout=subprocess.PIPE, shell=True)
     subprocess.call(["cd " + outdir + "; vcf-sort " + clean_binary + "_bub.vcf | vcfuniq >" + clean_binary + "_bub.uniq.vcf"],
                     stdout=subprocess.PIPE, shell=True)
-    subprocess.call(["cd " + outdir + "; mccortex63 vcfcov -q -m 8G --out " + clean_binary + "_bub.cov.vcf --ref ref/" +
+    subprocess.call(["cd " + outdir + "; mccortex63 vcfcov -q -n 50M -m 8G --out " + clean_binary + "_bub.cov.vcf --ref ref/" +
                      ref_bwa + " " + clean_binary + "_bub.uniq.vcf clean/" + clean_binary], stdout=subprocess.PIPE, shell=True)
 
     subprocess.call(["cd " + outdir + "; mc_vcf_filter.py " + clean_binary + "_bub.cov.vcf > " + clean_binary +

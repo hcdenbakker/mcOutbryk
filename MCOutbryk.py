@@ -292,22 +292,22 @@ def main():
             log.write(str(vcf_sum[0]) +': ' + str(vcf_sum[1]) + '\n')
             SNV_dict[vcf_sum[0][:-14]] = int(vcf_sum[1])
             highly_divergent = [f for f in SNV_dict if SNV_dict[f] > cutoff]
-            if len(highly_divergent) > 0:
-                log.write('Highly divergent isolates detected!')
-                print('highly divergent isolates detected!')
+        if len(highly_divergent) > 0:
+            log.write('Highly divergent isolates detected!\n')
+            print('highly divergent isolates detected!')
+            for f in highly_divergent:
+                print(f)
+                log.write(f + '\n')
+            if high_filter == 'yes':
+                log.write('Highly divergent isolates will not be included in variant list!\n')
+                print('Highly divergent isolates will not be included in variant list!\n')
                 for f in highly_divergent:
-                    print(f)
-                    log.write(f + '\n')
-                if high_filter == 'yes':
-                    log.write('Highly divergent isolates will not be included in variant list!\n')
-                    print('Highly divergent isolates will not be included in variant list!\n')
-                    for f in highly_divergent:
-                        subprocess.call(["rm " + outdir + '/' + f + '.ctx.final.vcf'], stdout=subprocess.PIPE, shell=True)
-                    samples = list(set(samples) - set(highly_divergent))
-                    print(samples)
-                else:
-                    log.write('You have chosen to include highly divergent isolates in construction variant list!\n')
-                    print('highly divergent isolates will be included in further analyses!')
+                    subprocess.call(["rm " + outdir + '/' + f + '.ctx.final.vcf'], stdout=subprocess.PIPE, shell=True)
+                samples = list(set(samples) - set(highly_divergent))
+                print(samples)
+            else:
+                log.write('You have chosen to include highly divergent isolates in construction variant list!\n')
+                print('highly divergent isolates will be included in further analyses!')
         create_master_vcf([f for f in os.listdir('./' + outdir) if f.endswith('.final.vcf')], outdir)
         subprocess.call(['rm '+outdir + "/*.final.vcf"],stdout=subprocess.PIPE, shell=True)
     #create snp fasta based on some simple consensus rules and include report
