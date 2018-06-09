@@ -32,6 +32,7 @@ Compile the mccortex63 binary:
 cd mccortex
 
 make MAXK=63 all
+make MAXK=31 all
 ```
 
 Add the mccortex63 binary and the mccortex/scripts folder to your path 
@@ -39,6 +40,37 @@ Add the mccortex63 binary and the mccortex/scripts folder to your path
 ### Execution
 Execute the pipeline in the folder with illumina fastq.gz files of the isolates you are interested in.
 Create a 1 column list with the sample names and  decide on an appropriate reference sequence.
+
+For help run:
+`MCOutbryk. py -h`
+
+```
+MCOutbryk - de novo SNP and ambiguous site Caller
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --reference REFERENCE [REFERENCE ...]
+                        Reference genome in fasta format, include path to file
+                        if file is not in same directory
+  --sample_list SAMPLE_LIST [SAMPLE_LIST ...]
+                        Text file, one isolate/sample per line
+  --results_dir RESULTS_DIR [RESULTS_DIR ...]
+                        Directory which will contain results after the
+                        analysis
+  --processes PROCESSES [PROCESSES ...]
+                        number of processes to run in parallel
+  --delete_highly_divergent {yes,no}
+                        delete highly divergent isolates automatically
+                        (default: yes)
+  --div_cutoff [DIV_CUTOFF]
+                        number of SNPs used as cutoff to define highly
+                        divergent isolates (default: 5000)
+  --K [K]               K-mer size (default: 33)
+  --SNP_vcf SNP_VCF [SNP_VCF ...]
+                        VCF with sites to be called; if this is given, the
+                        steps to create a SNP sites vcf de novo from the
+                        isolates in the sample list will be skipped.
+```
 
 To run mcOutbryk:
 ```
@@ -57,7 +89,7 @@ The pipeline does the following:
 
 4. Create vcfs with trusted SNPs and create a vcf of all trusted SNPs with bcftools merge
 
-5. Use combined lists to genotype all isolates with raw graphsresults stored in .cov.vcf files
+5. Use combined lists to genotype all isolates with raw graph results stored in .cov.vcf files
   
 6. Create SNP sites multi-fasta file (stored in resultsdir/MC_consensus.fasta; ambiguous calls: N, gaps: -, impossible to call: ?)); this file can be used as direct input for FastTree
 
