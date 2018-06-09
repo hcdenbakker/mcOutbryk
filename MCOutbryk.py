@@ -30,6 +30,8 @@ def parse_args():
                         choices=['yes', 'no'], default= 'yes', help='delete highly divergent isolates automatically (default: yes)')
     parser.add_argument('--div_cutoff', nargs='?', const=5000, type=int, default = 5000,
                         help='number of SNPs used as cutoff to define highly divergent isolates (default: 5000)')
+    parser.add_argument('--K', nargs='?', const=33, type=int, default=33,
+                        help='K-mer size (default: 33)')
     parser.add_argument(
         '--SNP_vcf', nargs='+', type=str, required=False,
         help='VCF with sites to be called; if this is given, the steps to create a SNP sites vcf de novo from the isolates in the sample list will be skipped.')
@@ -37,7 +39,7 @@ def parse_args():
     return parser.parse_args()
 
 
-def perform_actions_list(sample_list, outdir, num_procs):
+def perform_actions_list(sample_list, outdir, num_procs, K, mccortex):
     files = [f for f in os.listdir('.') if os.path.isfile(f)]
     raw_binaries = []
     try:
@@ -63,25 +65,25 @@ def perform_actions_list(sample_list, outdir, num_procs):
                 to_be_processed.write(sample + '\t' + sample + '_1.fastq.gz' + '\t' + sample + '_2.fastq.gz\n')
     to_be_processed.close()
     subprocess.call(["cat " + outdir + "/to_be_processed.txt | parallel --gnu -j " +
-                     num_procs + " --colsep '\t' mccortex63 build -q -s {1} -k 33 -Q 15 -p -n 500M -m 16GB  -2 {2}:{3} " + outdir + "/raw/{1}.ctx"],
+                     num_procs + " --colsep '\t' " + mccortex + " build -q -s {1} -k " + str(K) + " -Q 15 -p -n 500M -m 16GB  -2 {2}:{3} " + outdir + "/raw/{1}.ctx"],
                     stdout=subprocess.PIPE, shell=True)
 
-def clean_binaries(sample_file, outdir, num_procs):
+def clean_binaries(sample_file, outdir, num_procs, mccortex):
     subprocess.call([
-        "cat " + sample_file + " | parallel --gnu -j " + num_procs + " --colsep '\t' mccortex63 clean -q -m 8G -o " +
+        "cat " + sample_file + " | parallel --gnu -j " + num_procs + " --colsep '\t' " + mccortex + " clean -q -m 8G -o " +
         outdir + "/clean/{1}.ctx " + outdir + "/raw/{1}.ctx"], stdout=subprocess.PIPE, shell=True)
 
-def call_bubbles(outdir, num_procs, ref_ctx, reference):
+def call_bubbles(mccortex, outdir, num_procs, ref_ctx, reference):
     subprocess.call([
-        "cat " + outdir + "/cleaned.txt | parallel --gnu -j " + num_procs + " mcBubble.py {}.ctx " + ref_ctx + " " + reference + " " + outdir]
+        "cat " + outdir + "/cleaned.txt | parallel --gnu -j " + num_procs + " mcBubble.py " + mccortex + " {}.ctx " + ref_ctx + " " + reference + " " + outdir]
         , stdout=subprocess.PIPE, shell=True)
 
 
-def create_ref_binary(outdir, reference):
+def create_ref_binary(outdir, reference, K, mccortex):
     ref = os.path.basename(reference).rstrip('.fasta')
     ref_bwa = os.path.basename(reference)
     subprocess.call(
-        ["mccortex63 build -q -s " + ref + " -k 33 -m 8GB -f -t 32 -1 " + reference + " " + outdir + "/ref/" + ref
+        [mccortex + " build -q -s " + ref + " -k " + str(K) + " -m 8GB -f -t 32 -1 " + reference + " " + outdir + "/ref/" + ref
          + ".ctx"], stdout=subprocess.PIPE, shell=True)
     subprocess.call(["cp " + reference + " " + outdir + "/ref; bwa index " + outdir + "/ref/" + ref_bwa],
                     stdout=subprocess.PIPE, shell=True)
@@ -106,7 +108,7 @@ def summary(vcf):
     return name, count
 
 
-def create_master_vcf(list, outdir):
+def create_master_vcf(list, outdir, K):
     #get minimum information to create new vcf from list[0]
     with open(outdir +'/'+ list[0], 'r') as m:
         for line in m:
@@ -139,28 +141,28 @@ def create_master_vcf(list, outdir):
     with open(outdir +'/simple_merge.vcf', 'w') as merged_vcf:
         merged_vcf.write('##fileformat=VCFv4.2\n')
         merged_vcf.write('##FORMAT=<ID=GT,Number=1,Type=String,Description="Genotype">\n' +
-                         '##FORMAT=<ID=K33R,Number=A,Type=Integer,Description="Coverage on ref (k=33): sum(kmer_covs) / exp_num_kmers">\n' +
-                         '##FORMAT=<ID=K33A,Number=A,Type=Integer,Description="Coverage on alt (k=33): sum(kmer_covs) / exp_num_kmers">\n')
+                         '##FORMAT=<ID=K' + str(K) + 'R,Number=A,Type=Integer,Description="Coverage on ref (k=33): sum(kmer_covs) / exp_num_kmers">\n' +
+                         '##FORMAT=<ID=K' + str(K) + 'A,Number=A,Type=Integer,Description="Coverage on alt (k=33): sum(kmer_covs) / exp_num_kmers">\n')
         merged_vcf.write(contig)
         merged_vcf.write('#CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO\tFORMAT\tDummy\n')
         for s in sorted(sites):
             merged_vcf.write(chrom + '\t' + str(s) + '\t' + '.\t' + str(master_dict[s][0]) + '\t' +
                              ','.join(master_dict[s][1]) + '\t' + '.' + '\t' + 'PASS' +
-                             '\t' + '.' + '\t' + 'K33R:K33A' + '\t' + '.:.\n')
+                             '\t' + '.' + '\t' + 'K' + str(K) + 'R:K' + str(K) + 'A' + '\t' + '.:.\n')
 
 
-def coverage(sample_list, reference, outdir, vcf=None):
+def coverage(mccortex, sample_list, reference, outdir, vcf=None):
     if vcf == None:
         vcf = outdir + "/simple_merge.vcf"
     subprocess.call([
-        "cat " + sample_list + "| parallel --gnu mc_genotype.py " + reference + " " + vcf + " {} " +
+        "cat " + sample_list + "| parallel --gnu mc_genotype.py " + mccortex + " " + reference + " " + vcf + " {} " +
         outdir], stdout=subprocess.PIPE, shell=True)
 
-def genotyper(sample_list, reference, outdir, vcf=None):
+def genotyper(mccortex, sample_list, reference, outdir, vcf=None):
     if vcf == None:
         vcf = outdir + "/simple_merge.vcf"
     subprocess.call([
-        "cat " + sample_list + "| parallel --gnu mc_real_genotype.py " + reference + " " +
+        "cat " + sample_list + "| parallel --gnu mc_real_genotype.py " + mccortex + " " + reference + " " +
         vcf + " {} " + outdir], stdout=subprocess.PIPE, shell=True)
 
 
@@ -240,7 +242,10 @@ def main():
     high_filter = args.delete_highly_divergent
     cutoff = args.div_cutoff
     pre_calc_vcf = args.SNP_vcf
-    print(pre_calc_vcf)
+    K = args.K
+    mccortex = 'mccortex31'
+    if K > 31:
+        mccortex = 'mccortex63'
     subprocess.call(['mkdir ' + outdir], stdout=subprocess.PIPE, shell=True)
     log = open(outdir + '/mcOutbryk.log', 'w')
     log.write(strftime("%Y-%m-%d %H:%M:%S", localtime()) + ': Start\n')
@@ -258,15 +263,15 @@ def main():
         subprocess.call(["mkdir " + outdir + "/ref; cp " + reference + " " + outdir + "/ref"],
                         stdout=subprocess.PIPE, shell=True)
     else:
-        create_ref_binary(outdir, reference)
-    perform_actions_list(samples, outdir, num_procs)
+        create_ref_binary(outdir, reference, K, mccortex)
+    perform_actions_list(samples, outdir, num_procs, K, mccortex)
     log = open(outdir + '/mcOutbryk.log', 'a')
     log.write(strftime("%Y-%m-%d %H:%M:%S", localtime()) + ': Raw graphs created \n')
     log.close()
     if pre_calc_vcf:
         pass
     else:
-        clean_binaries(sample_list, outdir, num_procs)
+        clean_binaries(sample_list, outdir, num_procs, mccortex)
         log = open(outdir + '/mcOutbryk.log', 'a')
         log.write(strftime("%Y-%m-%d %H:%M:%S", localtime()) + ': Samples cleaned' '\n')
         subprocess.call(["find " + outdir +"/clean -size 0 -delete"], stdout=subprocess.PIPE, shell=True)
@@ -282,7 +287,7 @@ def main():
         cleaned = open(outdir + '/cleaned.txt', 'w')
         [cleaned.write(cl + '\n') for cl in clean_files]
         cleaned.close()
-        call_bubbles(outdir, num_procs, ref_ctx, reference)
+        call_bubbles(mccortex, outdir, num_procs, ref_ctx, reference)
         individual_vcfs = [f for f in os.listdir('./' + outdir ) if f.endswith('.final.vcf')]
         log = open(outdir + '/mcOutbryk.log', 'a')
         log.write('Called SNPs per sample:'+ '\n')
@@ -308,13 +313,13 @@ def main():
             else:
                 log.write('You have chosen to include highly divergent isolates in construction variant list!\n')
                 print('highly divergent isolates will be included in further analyses!')
-        create_master_vcf([f for f in os.listdir('./' + outdir) if f.endswith('.final.vcf')], outdir)
+        create_master_vcf([f for f in os.listdir('./' + outdir) if f.endswith('.final.vcf')], outdir, K)
         subprocess.call(['rm '+outdir + "/*.final.vcf"],stdout=subprocess.PIPE, shell=True)
     #create snp fasta based on some simple consensus rules and include report
     if pre_calc_vcf:
-        coverage(sample_list, reference, outdir, pre_calc_vcf[0])
+        coverage(mccortex, sample_list, reference, outdir, pre_calc_vcf[0])
     else:
-        coverage(sample_list, reference, outdir)
+        coverage(mccortex, sample_list, reference, outdir)
     fasta_out = open(outdir + '/MC_consensus.fasta', 'w')
     cov_vcfs = [f for f in os.listdir('./' + outdir) if f.endswith('.cov.vcf')]
     cov_report = open(outdir + '/MC_consensus.txt', 'w')
@@ -344,9 +349,9 @@ def main():
                     vcf[:-9] + '\t' + str(round(1 - gaps - hets - unknown, 2)) + '\t' +
                     str(round(gaps, 2)) + '\t' + str(round(hets, 2)) + '\t' + str(round(unknown, 2)) + '\n')
     if pre_calc_vcf:
-        genotyper(sample_list, reference, outdir, pre_calc_vcf[0])
+        genotyper(mccortex, sample_list, reference, outdir, pre_calc_vcf[0])
     else:
-        genotyper(sample_list, reference, outdir)
+        genotyper(mccortex, sample_list, reference, outdir)
     # create snp fasta based on genotyping
     fasta_out_geno = open(outdir + '/MC_consensus_geno.fasta', 'w')
     geno_vcfs = [f for f in os.listdir('./' + outdir) if f.endswith('.geno.vcf')]
