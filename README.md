@@ -87,9 +87,9 @@ The pipeline does the following:
 
 3. Bubble call each individual isolate vs reference (and delete cleaned graphs and some intermediary files)
 
-4. Create vcfs with trusted SNPs and create a vcf of all trusted SNPs with bcftools merge
+4. Create vcfs with trusted SNPs and create a 'pseudo-vcf' of all trusted SNPs
 
-5. Use combined lists to genotype all isolates with raw graph results stored in .cov.vcf files
+5. Use 'pseudo-vcf' to genotype (= call SNPs) of all isolates using their raw graph
   
 6. Create SNP sites multi-fasta file (stored in resultsdir/MC_consensus.fasta; ambiguous calls: N, gaps: -, impossible to call: ?)); this file can be used as direct input for FastTree
 
